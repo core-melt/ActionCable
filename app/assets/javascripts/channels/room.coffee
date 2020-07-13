@@ -1,3 +1,4 @@
+#クライアントサイドの処理を受け持つチャンネル
 App.room = App.cable.subscriptions.create "RoomChannel",
   connected: ->
     # Called when the subscription is ready for use on the server
@@ -7,6 +8,10 @@ App.room = App.cable.subscriptions.create "RoomChannel",
 
   received: (data) ->
     # Called when there's incoming data on the websocket for this channel
+    # サーバーからデータを受け取ったときの動きを定義
+    # 受け取ったデータをアラートで表示
+    alert data['message']
 
-  speak: ->
-    @perform 'speak'
+  # サーバーサイドのspeakアクションを呼びだし、messageをパラメータとして渡す
+  speak: (message) ->
+    @perform 'speak', message: message
